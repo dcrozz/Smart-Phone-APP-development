@@ -58,14 +58,14 @@
             <Button android:id="@+id/btn_Login"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dip"
+                android:layout_marginTop="30dip"
                 android:text="Login"/>
             <!-- Link to Registration Screen -->
             <TextView android:id="@+id/link_to_register"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dip"
-                android:layout_marginBottom="40dip"
+                android:layout_marginTop="90dip"
+                android:layout_marginBottom="90dip"
                 android:text="New to Moodle? Register here"
                 android:gravity="center"
                 android:textSize="20dip"
@@ -78,7 +78,9 @@
             android:layout_height="90dip"
             android:layout_alignParentBottom="true"
             android:background="@drawable/repeat_bg"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:layout_alignParentTop="false"
+            android:layout_alignParentRight="false">
         </LinearLayout>
         <!-- Footer Ends -->
     </RelativeLayout>
