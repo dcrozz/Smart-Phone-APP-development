@@ -2,13 +2,14 @@ package com.example.alex.assign_1;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 public class game extends AppCompatActivity {
     private String stdid, stdpw;
-
+    private boolean isWhiteTurn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,17 +37,49 @@ public class game extends AppCompatActivity {
         linearLayout[5] = (LinearLayout)findViewById(R.id.ll6);
         linearLayout[6] = (LinearLayout)findViewById(R.id.ll7);
 
-        ImageView imageButton;
-        for (int i = 0; i < 7; i++) {
-//            linearLayout[i]= (LinearLayout)findViewById(R.id.ll);
-            for (int j = 0; j < 6; j++) {
-                imageButton = new ImageView(this);
-                imageButton.setLayoutParams(new ViewGroup.LayoutParams(150, 150));
-                imageButton.setImageResource(R.drawable.empty_t);
-                linearLayout[i].addView(imageButton);
+        ImageView imageButton[][] = new ImageView[7][6];
+        final boolean[][] chess = new boolean[7][6];
+        for (int i = 0; i < 7; i++){
+            for(int j=0;j<6; j++){
+                chess[i][j] = false;
+            }
+        }
+//        chess[0][0] = false;
+        for (int i = 6; i >=0 ; i--) {
+            for (int j = 5; j >= 0; j--) {
+                final int locali = i;
+                final int localj = j;
+                final ImageView localimageButton[][] = imageButton;
+                imageButton[i][j] = new ImageView(this);
+                imageButton[i][j].setLayoutParams(new ViewGroup.LayoutParams(150, 150));
+                imageButton[i][j].setImageResource(R.drawable.empty_t);
+                imageButton[i][j].setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (!chess[locali][localj]) {
+                            for (int count = 0; count < 6 ; count++) {
+                                if (!chess[locali][count]) {
+                                    if (isWhiteTurn) {
+                                        localimageButton[locali][count].setImageResource(R.drawable.red_t);
+                                        isWhiteTurn = false;
+                                        chess[locali][count] = true;
+                                        break;
+                                    } else {
+                                        localimageButton[locali][count].setImageResource(R.drawable.green_t);
+                                        isWhiteTurn = true;
+                                        chess[locali][count] = true;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+                linearLayout[i].addView(imageButton[i][j]);
 //        TextView tv = new TextView(this);
             }
         }
+
     }
 //        setContentView(R.layout.activity_game);
 }
