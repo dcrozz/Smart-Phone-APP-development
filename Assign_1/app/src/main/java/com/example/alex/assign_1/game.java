@@ -76,86 +76,139 @@ public class game extends AppCompatActivity {
         }
     }
     protected void ifWin(int i, int j, int color){
-//        int lcount = 0;
-//        int rcount = 0;
-//        int dcount = 0;
+        int lcount = 0;
+        int rcount = 0;
+        int dcount = 0;
         int ulcount = 0;
-//        int urcount = 0;
-//        int dlcount = 0;
+        int urcount = 0;
+        int dlcount = 0;
         int drcount = 0;
-//            for(int x=i;x>=0;x--){
-//                //判左边
-//                if(chess[x][j]==color){
-//                    lcount++;
-//                    System.out.println(Integer.toString(color) + "lcount:" + Integer.toString(lcount));
-//                }else{
-//                    continue;
-//                }
-//            }
-//            for(int x=i;x<7;x++){
-//                //判右边
-//                if(chess[x][j]==color){
-//                    rcount++;
-//                    System.out.println(Integer.toString(color) + "rcount:" + Integer.toString(rcount));
-//                }else{
-//                    continue;
-//                }
-//            }
-//            if(lcount+rcount==5){
-//                if(color==1){
-//                    System.out.print("Red WIN");
-//                }else{
-//                    System.out.print("Green WIN");
-//                }
-//            }
+            for(int x=i;x>=0;x--){
+                //判左边
+                if(chess[x][j]==color){
+                    lcount++;
+                    System.out.println(Integer.toString(color) + "lcount:" + Integer.toString(lcount));
+                }else{
+                    continue;
+                }
+            }
+            for(int x=i;x<7;x++){
+                //判右边
+                if(chess[x][j]==color){
+                    rcount++;
+                    System.out.println(Integer.toString(color) + "rcount:" + Integer.toString(rcount));
+                }else{
+                    continue;
+                }
+            }
+            if(lcount+rcount==5){
+                if(color==1){
+                    System.out.println("Red WIN");
+                }else{
+                    System.out.println("Green WIN");
+                }
+            }
 
-//        for(int x=j;x<6;x++){
-//            if(chess[i][x]==color){
-//                dcount++;
-//                System.out.println(Integer.toString(color) + "dcount:" + Integer.toString(dcount));
-//                if(dcount==4){
-////                    for(int a = 0; a < 7; i++){
-////                        for(int b=0; b < 6; j++){
-////                            chess[a][b] = 3;
-////                        }
-////                    }
-//                    if(color==1){
-//                        System.out.print("Red WIN");
-//                    }else{
-//                        System.out.print("Green WIN");
+        for(int x=j;x<6;x++){
+            if(chess[i][x]==color){
+                dcount++;
+                System.out.println(Integer.toString(color) + "dcount:" + Integer.toString(dcount));
+                if(dcount==4){
+//                    for(int a = 0; a < 7; i++){
+//                        for(int b=0; b < 6; j++){
+//                            chess[a][b] = 3;
+//                        }
 //                    }
-//                }
-//            }else{
-//                continue;
-//            }
-//        }
+                    if(color==1){
+                        System.out.println("Red WIN");
+                    }else{
+                        System.out.println("Green WIN");
+                    }
+                }
+            }else{
+                continue;
+            }
+        }
         int tmpj = j;
-        for(int x=i;x>=0&&j>0;x--,tmpj--){
+        for(int x=i;x>=0&&tmpj>=0;x--,tmpj--){
             //判左上
-            if(x==0 || tmpj== 0){ulcount = 0;break;}
             if(chess[x][tmpj]==color){
                 ulcount++;
-                System.out.println("------->"+x+j+"----->"+ulcount);
+                if (color==1) {
+                    System.out.println("red:------->" + x + tmpj + "ulcount----->" + ulcount);
+                }else{
+                    System.out.println("green:------->" + x + tmpj + "ulcount----->" + ulcount);
+                }
             }else{
                 break;
             }
         }
         tmpj = j;
-        for(int x=i;x<6&&j<5;x++,tmpj++){
+        for(int x=i;x<6&&tmpj<5;x++,tmpj++){
             //判右下
-            if(x==6 || tmpj== 5){drcount = 0; break;}
             if(chess[x+1][tmpj+1]==color){
                 drcount++;
-                System.out.println("------->"+x+j+"----->"+drcount);
+                if(color==1){
+                    System.out.println("red:------->"+x+tmpj+"drcount----->"+drcount);
+                }else{
+                    System.out.println("green:------->"+x+tmpj+"drcount----->"+drcount);
+                }
             }else{
                 break;
             }
         }
+                    //for testing
+//                    if(color==1){
+//                        System.out.println("red:------->"+drcount+ulcount);
+//                    }else{
+//                        System.out.println("green:------->"+drcount+ulcount);
+//                    }
         if(ulcount+drcount>=4){
             if(color==1){
-                System.out.print("Red WIN");
+                System.out.println("Red WIN");
             }else{
-                System.out.print("Green WIN");
+                System.out.println("Green WIN");
+            }
+        }
+        tmpj = j;
+        for(int x=i;x<7&&tmpj>=0;x++,tmpj--){
+            //判右上
+            if(chess[x][tmpj]==color){
+                urcount++;
+                if (color==1) {
+                    System.out.println("red:------->" + x + tmpj + "urcount----->" + urcount);
+                }else{
+                    System.out.println("green:------->" + x + tmpj + "urcount----->" + urcount);
+                }
+            }else{
+                break;
+            }
+        }
+        tmpj = j;
+        for(int x=i;x>0&&tmpj<5;x--,tmpj++){
+            //判左下
+            if(chess[x-1][tmpj+1]==color){
+                dlcount++;
+                if(color==1){
+                    System.out.println("red:------->"+x+tmpj+"dlcount----->"+dlcount);
+                }else{
+                    System.out.println("green:------->"+x+tmpj+"dlcount----->"+dlcount);
+                }
+            }else{
+                break;
+            }
+        }
+        //for testing
+//                    if(color==1){
+//                        System.out.println("red:------->"+drcount+ulcount);
+//                    }else{
+//                        System.out.println("green:------->"+drcount+ulcount);
+//                    }
+        if(urcount+dlcount>=4){
+            if(color==1){
+                System.out.println("Red WIN");
+            }else{
+                System.out.println("Green WIN");
             }
         }
     }
