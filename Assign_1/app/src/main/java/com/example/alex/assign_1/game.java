@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class game extends AppCompatActivity {
@@ -37,6 +38,15 @@ public class game extends AppCompatActivity {
         linearLayout[4] = (LinearLayout) findViewById(R.id.ll5);
         linearLayout[5] = (LinearLayout) findViewById(R.id.ll6);
         linearLayout[6] = (LinearLayout) findViewById(R.id.ll7);
+
+        TextView gameTurn = new TextView(this);
+        gameTurn = (TextView) findViewById(R.id.gameTurn);
+        final TextView localgameTurn = gameTurn;
+        if(isRedTurn){
+            gameTurn.setText("Red Turn");
+        }else{
+            gameTurn.setText("Green Turn");
+        }
 //
         //初始化chess数组
         for (int i = 0; i < 7; i++) {
@@ -57,6 +67,11 @@ public class game extends AppCompatActivity {
                 imageButton[i][j].setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        if(!isRedTurn){
+                            localgameTurn.setText("Red Turn");
+                        }else{
+                            localgameTurn.setText("Green Turn");
+                        }
                         if (chess[locali][localj] == 0) {
                             for (int count = 5; count >= 0; count--) {
                                 if (chess[locali][count] == 0 && !gameSet) {
@@ -98,9 +113,7 @@ public class game extends AppCompatActivity {
             //判左边
             if (chess[x][j] == color) {
                 lcount++;
-//                    System.out.println(Integer.toString(color) + "lcount:" + Integer.toString(lcount));
             } else {
-//                    continue;
                 break;
             }
         }
@@ -108,9 +121,7 @@ public class game extends AppCompatActivity {
             //判右边
             if (chess[x][j] == color) {
                 rcount++;
-//                    System.out.println(Integer.toString(color) + "rcount:" + Integer.toString(rcount));
             } else {
-//                    continue;
                 break;
             }
         }
@@ -133,7 +144,6 @@ public class game extends AppCompatActivity {
         for (int x = j; x < 6; x++) {
             if (chess[i][x] == color) {
                 dcount++;
-//                System.out.println(Integer.toString(color) + "dcount:" + Integer.toString(dcount));
             } else {
                 break;
             }
@@ -160,11 +170,6 @@ public class game extends AppCompatActivity {
             //判左上
             if (chess[x][tmpj] == color) {
                 ulcount++;
-//                if (color==1) {
-//                    System.out.println("red:------->" + x + tmpj + "ulcount----->" + ulcount);
-//                }else{
-//                    System.out.println("green:------->" + x + tmpj + "ulcount----->" + ulcount);
-//                }
             } else {
                 break;
             }
@@ -174,24 +179,13 @@ public class game extends AppCompatActivity {
             //判右下
             if (chess[x + 1][tmpj + 1] == color) {
                 drcount++;
-//                if(color==1){
-//                    System.out.println("red:------->"+x+tmpj+"drcount----->"+drcount);
-//                }else{
-//                    System.out.println("green:------->"+x+tmpj+"drcount----->"+drcount);
-//                }
             } else {
                 break;
             }
         }
-        //for testing
-//                    if(color==1){
-//                        System.out.println("red:------->"+drcount+ulcount);
-//                    }else{
-//                        System.out.println("green:------->"+drcount+ulcount);
-//                    }
         if (ulcount + drcount >= 4) {
             //全部放到一个数组里
-            for (int hix = i - ulcount +1, hij = j-ulcount + 1; hix<i+drcount; hix++, hij++) {
+            for (int hix = i - ulcount + 1, hij = j - ulcount + 1; hix < i + drcount + 1; hix++, hij++) {
                 if (color == 1) {
                     chess[hix][hij] = 4;
                 } else {
@@ -211,11 +205,6 @@ public class game extends AppCompatActivity {
             //判右上
             if (chess[x][tmpj] == color) {
                 urcount++;
-//                if (color==1) {
-//                    System.out.println("red:------->" + x + tmpj + "urcount----->" + urcount);
-//                }else{
-//                    System.out.println("green:------->" + x + tmpj + "urcount----->" + urcount);
-//                }
             } else {
                 break;
             }
@@ -225,25 +214,15 @@ public class game extends AppCompatActivity {
             //判左下
             if (chess[x - 1][tmpj + 1] == color) {
                 dlcount++;
-//                if(color==1){
-//                    System.out.println("red:------->"+x+tmpj+"dlcount----->"+dlcount);
-//                }else{
-//                    System.out.println("green:------->"+x+tmpj+"dlcount----->"+dlcount);
-//                }
             } else {
                 break;
             }
         }
-        //for testing
-//                    if(color==1){
-//                        System.out.println("red:------->"+drcount+ulcount);
-//                    }else{
-//                        System.out.println("green:------->"+drcount+ulcount);
-//                    }
+
         if (urcount + dlcount >= 4) {
 
             //全部放到一个数组里
-            for (int hix = i - dlcount +1, hij = j + dlcount + 1; hix<i+urcount; hix++, hij--) {
+            for (int hix = i - dlcount, hij = j + dlcount; hix < i + urcount; hix++, hij--) {
                 if (color == 1) {
                     chess[hix][hij] = 4;
                 } else {
@@ -255,7 +234,7 @@ public class game extends AppCompatActivity {
     }
 
     protected void winEffect(int color) {
-        gameSet=true;
+        gameSet = true;
         for (int i = 0; i < 7; i++) {
             for (int j = 0; j < 6; j++) {
                 if (chess[i][j] == 4) {
