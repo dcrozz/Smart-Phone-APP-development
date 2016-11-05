@@ -15,6 +15,8 @@ public class game extends AppCompatActivity {
     private int[][] chess = new int[7][6];
     private ImageView imageButton[][] = new ImageView[7][6];
     private boolean gameSet = false;
+//    private TextView gameTurn = new TextView(game.this);
+
 
     //none = 0, red = 1, green =2，fin = 3, hired = 4, higreen = 5
     @Override
@@ -41,13 +43,11 @@ public class game extends AppCompatActivity {
 
         TextView gameTurn = new TextView(this);
         gameTurn = (TextView) findViewById(R.id.gameTurn);
-        final TextView localgameTurn = gameTurn;
-        if(isRedTurn){
+        if (isRedTurn) {
             gameTurn.setText("Red Turn");
-        }else{
+        } else {
             gameTurn.setText("Green Turn");
         }
-//
         //初始化chess数组
         for (int i = 0; i < 7; i++) {
             for (int j = 0; j < 6; j++) {
@@ -60,6 +60,7 @@ public class game extends AppCompatActivity {
                 final int locali = i;
                 final int localj = j;
                 final ImageView localimageButton[][] = imageButton;
+                final TextView localgameTurn = gameTurn;
                 imageButton[i][j] = new ImageView(this);
                 imageButton[i][j].setLayoutParams(new ViewGroup.LayoutParams(150, 150));
                 imageButton[i][j].setImageResource(R.drawable.empty_t);
@@ -67,9 +68,9 @@ public class game extends AppCompatActivity {
                 imageButton[i][j].setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(!isRedTurn){
+                        if (!isRedTurn) {
                             localgameTurn.setText("Red Turn");
-                        }else{
+                        } else {
                             localgameTurn.setText("Green Turn");
                         }
                         if (chess[locali][localj] == 0) {
@@ -103,9 +104,12 @@ public class game extends AppCompatActivity {
         verWin(i, j, color);
         lcrossWin(i, j, color);
         rcrossWin(i, j, color);
+        winEffect(i, j, color);
     }
 
     protected void horWin(int i, int j, int color) {
+        //确保落下子的值还是原来的color
+        chess[i][j] = color;
         int lcount = 0;
         int rcount = 0;
         //下面两个for判断横向4子
@@ -134,12 +138,14 @@ public class game extends AppCompatActivity {
                     chess[x][j] = 5;
                 }
             }
-            winEffect(color);
+            gameSet = true;
         }
     }
 
     protected void verWin(int i, int j, int color) {
         int dcount = 0;
+        //确保落下子的值还是原来的color
+        chess[i][j] = color;
         //下面一个for判断上下4子
         for (int x = j; x < 6; x++) {
             if (chess[i][x] == color) {
@@ -157,11 +163,13 @@ public class game extends AppCompatActivity {
                     chess[i][x] = 5;
                 }
             }
-            winEffect(color);
+            gameSet = true;
         }
     }
 
     protected void lcrossWin(int i, int j, int color) {
+        //确保落下子的值还是原来的color
+        chess[i][j] = color;
         int drcount = 0;
         int ulcount = 0;
         //下面2个for判断左对角线4子
@@ -192,11 +200,13 @@ public class game extends AppCompatActivity {
                     chess[hix][hij] = 5;
                 }
             }
-            winEffect(color);
+            gameSet = true;
         }
     }
 
     protected void rcrossWin(int i, int j, int color) {
+        //确保落下子的值还是原来的color
+        chess[i][j] = color;
         int urcount = 0;
         int dlcount = 0;
         //下面一个for判断右对角线4子
@@ -229,26 +239,34 @@ public class game extends AppCompatActivity {
                     chess[hix][hij] = 5;
                 }
             }
-            winEffect(color);
+            gameSet = true;
         }
     }
 
-    protected void winEffect(int color) {
-        gameSet = true;
-        for (int i = 0; i < 7; i++) {
-            for (int j = 0; j < 6; j++) {
-                if (chess[i][j] == 4) {
-                    imageButton[i][j].setImageResource(R.drawable.red_wint);
-                } else if (chess[i][j] == 5) {
-                    imageButton[i][j].setImageResource(R.drawable.green_wint);
+    protected void winEffect(int i, int j, int color) {
+        if (gameSet) {
+            if (color == 1) {
+                chess[i][j] = 4;
+            } else {
+                chess[i][j] = 5;
+            }
+            for (int hii = 0; hii < 7; hii++) {
+                for (int hij = 0; hij < 6; hij++) {
+                    if (chess[hii][hij] == 4) {
+                        imageButton[hii][hij].setImageResource(R.drawable.red_wint);
+                    } else if (chess[hii][hij] == 5) {
+                        imageButton[hii][hij].setImageResource(R.drawable.green_wint);
+                    }
                 }
             }
-        }
-        if (color == 1) {
-            Toast.makeText(game.this, "Red win", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(game.this, "Green win", Toast.LENGTH_SHORT).show();
+
+            if (color == 1) {
+                Toast.makeText(game.this, "Red win", Toast.LENGTH_SHORT).show();
+//            gameTurn.setText("Red Win");
+            } else {
+                Toast.makeText(game.this, "Green win", Toast.LENGTH_SHORT).show();
+//            gameTurn.setText("Green Win");
+            }
         }
     }
-
 }
