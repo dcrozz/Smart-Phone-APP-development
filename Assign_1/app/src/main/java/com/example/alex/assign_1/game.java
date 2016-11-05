@@ -4,18 +4,21 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayDeque;
+
 public class game extends AppCompatActivity {
     private String stdid, stdpw;
     private boolean isRedTurn;
     private int[][] chess = new int[7][6];
+    private ArrayDeque<Integer> sequence = new ArrayDeque<>();
     private ImageView imageButton[][] = new ImageView[7][6];
     private boolean gameSet = false;
-//    private TextView gameTurn = new TextView(game.this);
 
 
     //none = 0, red = 1, green =2，fin = 3, hired = 4, higreen = 5
@@ -33,6 +36,41 @@ public class game extends AppCompatActivity {
 //        tv.setText(stdid + '\n' + stdpw);
 //        setContentView(tv);
         LinearLayout linearLayout[] = new LinearLayout[7];
+        TextView gameTurn = new TextView(this);
+        gameTurn = (TextView) findViewById(R.id.gameTurn);
+        if (isRedTurn) {
+            gameTurn.setText("Red Turn");
+        } else {
+            gameTurn.setText("Green Turn");
+        }
+        final TextView localgameTurn = gameTurn;
+        Button retreat;
+        retreat = (Button) findViewById(R.id.retreat);
+        retreat.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                if(!gameSet){
+                    if(sequence.isEmpty()){
+                        Toast.makeText(game.this, "Please put at least one chess", Toast.LENGTH_SHORT).show();
+                    }else {
+                        isRedTurn = !isRedTurn;
+                        int retreatj = sequence.pop();
+                        int retreati = sequence.pop();
+                        chess[retreati][retreatj] = 0;
+                        imageButton[retreati][retreatj].setImageResource(R.drawable.empty_t);
+
+                        if (isRedTurn) {
+                            localgameTurn.setText("Red Turn");
+                        } else {
+                            localgameTurn.setText("Green Turn");
+                        }
+                    }
+                }else{
+                    Toast.makeText(game.this, "The game is over", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
         linearLayout[0] = (LinearLayout) findViewById(R.id.ll1);
         linearLayout[1] = (LinearLayout) findViewById(R.id.ll2);
         linearLayout[2] = (LinearLayout) findViewById(R.id.ll3);
@@ -41,13 +79,7 @@ public class game extends AppCompatActivity {
         linearLayout[5] = (LinearLayout) findViewById(R.id.ll6);
         linearLayout[6] = (LinearLayout) findViewById(R.id.ll7);
 
-        TextView gameTurn = new TextView(this);
-        gameTurn = (TextView) findViewById(R.id.gameTurn);
-        if (isRedTurn) {
-            gameTurn.setText("Red Turn");
-        } else {
-            gameTurn.setText("Green Turn");
-        }
+
         //初始化chess数组
         for (int i = 0; i < 7; i++) {
             for (int j = 0; j < 6; j++) {
@@ -60,7 +92,7 @@ public class game extends AppCompatActivity {
                 final int locali = i;
                 final int localj = j;
                 final ImageView localimageButton[][] = imageButton;
-                final TextView localgameTurn = gameTurn;
+//                final TextView localgameTurn = gameTurn;
                 imageButton[i][j] = new ImageView(this);
                 imageButton[i][j].setLayoutParams(new ViewGroup.LayoutParams(150, 150));
                 imageButton[i][j].setImageResource(R.drawable.empty_t);
@@ -79,12 +111,16 @@ public class game extends AppCompatActivity {
                                     if (isRedTurn) {
                                         localimageButton[locali][count].setImageResource(R.drawable.red_t);
                                         isRedTurn = false;
+                                        sequence.push(locali);
+                                        sequence.push(count);
                                         chess[locali][count] = 1;
                                         ifWin(locali, count, 1);
                                         break;
                                     } else {
                                         localimageButton[locali][count].setImageResource(R.drawable.green_t);
                                         isRedTurn = true;
+                                        sequence.push(locali);
+                                        sequence.push(count);
                                         chess[locali][count] = 2;
                                         ifWin(locali, count, 2);
                                         break;
