@@ -141,17 +141,19 @@ public class game extends AppCompatActivity {
                 imageButton[i][j].setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (!isRedTurn) {
-                            localgameTurn.setText("Resistance Turn");
-                            localgameTurn.setTextColor(Color.parseColor("#00FFFF"));
-                            localblueTurn.setImageResource(R.drawable.resistance_alt);
-                            localgreenTurn.setImageResource(R.drawable.enlightened);
-                        } else {
-                            localgameTurn.setText("Enlightened Turn");
-                            localgameTurn.setTextColor(Color.GREEN);
-                            localblueTurn.setImageResource(R.drawable.resistance);
-                            localgreenTurn.setImageResource(R.drawable.enlightened_alt);
+                        if(!gameSet) {
+                            if (!isRedTurn) {
+                                localgameTurn.setText("Resistance Turn");
+                                localgameTurn.setTextColor(Color.parseColor("#00FFFF"));
+                                localblueTurn.setImageResource(R.drawable.resistance_alt);
+                                localgreenTurn.setImageResource(R.drawable.enlightened);
+                            } else {
+                                localgameTurn.setText("Enlightened Turn");
+                                localgameTurn.setTextColor(Color.GREEN);
+                                localblueTurn.setImageResource(R.drawable.resistance);
+                                localgreenTurn.setImageResource(R.drawable.enlightened_alt);
 
+                            }
                         }
                         if (chess[locali][localj] == 0) {
                             for (int count = 5; count >= 0; count--) {
