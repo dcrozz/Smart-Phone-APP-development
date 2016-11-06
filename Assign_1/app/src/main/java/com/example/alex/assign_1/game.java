@@ -26,6 +26,7 @@ public class game extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+//        getWindow().setBackgroundDrawableResource(R.drawable.background);
 //        RelativeLayout relativeLayout = (RelativeLayout)findViewById(R.id.gameRelativeLayout);//获取root RL
 //        LinearLayout linearLayout1 = new LinearLayout(this);
 //        Display display = getWindowManager().getDefaultDisplay(); 之后全部用代码画
@@ -92,7 +93,6 @@ public class game extends AppCompatActivity {
                 final int locali = i;
                 final int localj = j;
                 final ImageView localimageButton[][] = imageButton;
-//                final TextView localgameTurn = gameTurn;
                 imageButton[i][j] = new ImageView(this);
                 imageButton[i][j].setLayoutParams(new ViewGroup.LayoutParams(150, 150));
                 imageButton[i][j].setImageResource(R.drawable.empty_t);
