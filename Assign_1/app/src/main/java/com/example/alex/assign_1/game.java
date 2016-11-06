@@ -1,5 +1,6 @@
 package com.example.alex.assign_1;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -36,13 +37,19 @@ public class game extends AppCompatActivity {
 //        TextView tv = new TextView(this);
 //        tv.setText(stdid + '\n' + stdpw);
 //        setContentView(tv);
+
+
         LinearLayout linearLayout[] = new LinearLayout[7];
         TextView gameTurn = new TextView(this);
         gameTurn = (TextView) findViewById(R.id.gameTurn);
         if (isRedTurn) {
-            gameTurn.setText("Red Turn");
+            gameTurn.setText("Resistance Turn");
+            gameTurn.setTextColor(Color.parseColor("#00FFFF"));
+
         } else {
-            gameTurn.setText("Green Turn");
+            gameTurn.setText("Enlightened Turn");
+            gameTurn.setTextColor(Color.GREEN);
+
         }
         final TextView localgameTurn = gameTurn;
         Button retreat;
@@ -61,17 +68,44 @@ public class game extends AppCompatActivity {
                         imageButton[retreati][retreatj].setImageResource(R.drawable.empty_t);
 
                         if (isRedTurn) {
-                            localgameTurn.setText("Red Turn");
+                            localgameTurn.setText("Resistance Turn");
+                            localgameTurn.setTextColor(Color.parseColor("#00FFFF"));
                         } else {
-                            localgameTurn.setText("Green Turn");
+                            localgameTurn.setText("Enlightened Turn");
+                            localgameTurn.setTextColor(Color.GREEN);
                         }
                     }
                 }else{
-                    Toast.makeText(game.this, "The game is over", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(game.this, "Lose is Lose. One More Campaign", Toast.LENGTH_SHORT).show();
                 }
 
             }
         });
+
+        Button restart;
+        restart = (Button) findViewById(R.id.restart);
+        restart.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                //初始化chess数组
+                for (int i = 0; i < 7; i++) {
+                    for (int j = 0; j < 6; j++) {
+                        chess[i][j] = 0;
+                        imageButton[i][j].setImageResource(R.drawable.empty_t);
+
+                    }
+                }
+                isRedTurn = false;
+                gameSet = false;
+                localgameTurn.setText("Enlightened Turn");
+                localgameTurn.setTextColor(Color.GREEN);
+                sequence.clear();
+            }
+        });
+
+
+
+
         linearLayout[0] = (LinearLayout) findViewById(R.id.ll1);
         linearLayout[1] = (LinearLayout) findViewById(R.id.ll2);
         linearLayout[2] = (LinearLayout) findViewById(R.id.ll3);
@@ -101,9 +135,12 @@ public class game extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         if (!isRedTurn) {
-                            localgameTurn.setText("Red Turn");
+                            localgameTurn.setText("Resistance Turn");
+                            localgameTurn.setTextColor(Color.parseColor("#00FFFF"));
                         } else {
-                            localgameTurn.setText("Green Turn");
+                            localgameTurn.setText("Enlightened Turn");
+                            localgameTurn.setTextColor(Color.GREEN);
+
                         }
                         if (chess[locali][localj] == 0) {
                             for (int count = 5; count >= 0; count--) {
@@ -297,10 +334,10 @@ public class game extends AppCompatActivity {
             }
 
             if (color == 1) {
-                Toast.makeText(game.this, "Red win", Toast.LENGTH_SHORT).show();
+                Toast.makeText(game.this, "The Resistance Win", Toast.LENGTH_SHORT).show();
 //            gameTurn.setText("Red Win");
             } else {
-                Toast.makeText(game.this, "Green win", Toast.LENGTH_SHORT).show();
+                Toast.makeText(game.this, "The Enlightened Win", Toast.LENGTH_SHORT).show();
 //            gameTurn.setText("Green Win");
             }
         }
