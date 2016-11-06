@@ -8,8 +8,39 @@
         android:id="@+id/gameTurn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
+        android:layout_centerHorizontal="true"
+        android:textSize="14sp"
         android:textAppearance="?android:attr/textAppearanceLarge" />
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="200dp"
+        android:id="@+id/enlightened"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/enlightened"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/gscore"
+        android:layout_alignParentLeft="true"
+        android:textSize="40sp"/>
+        <!--android:layout_toRightOf="@+id/enlightened"/>-->
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="200dp"
+        android:id="@+id/resistance"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/resistance"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/rscore"
+        android:textSize="40sp"
+        android:layout_alignParentRight="true"/>
+        <!--android:layout_toLeftOf="@+id/resistance"-->
+
 
     <LinearLayout
         android:layout_width="match_parent"

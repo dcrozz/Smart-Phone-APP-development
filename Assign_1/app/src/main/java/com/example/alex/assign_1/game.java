@@ -20,46 +20,64 @@ public class game extends AppCompatActivity {
     private ArrayDeque<Integer> sequence = new ArrayDeque<>();
     private ImageView imageButton[][] = new ImageView[7][6];
     private boolean gameSet = false;
-
+    private ImageView blueTurn, greenTurn;
+    private TextView gameTurn,gscore,rscore;
+    private int[] score = {0,0};
 
     //none = 0, red = 1, green =2，fin = 3, hired = 4, higreen = 5
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-//        getWindow().setBackgroundDrawableResource(R.drawable.background);
-//        RelativeLayout relativeLayout = (RelativeLayout)findViewById(R.id.gameRelativeLayout);//获取root RL
-//        LinearLayout linearLayout1 = new LinearLayout(this);
-//        Display display = getWindowManager().getDefaultDisplay(); 之后全部用代码画
-//        Intent intent = getIntent();
-//        stdid = intent.getStringExtra("ID");
-//        stdpw = intent.getStringExtra("PW");
-//        TextView tv = new TextView(this);
-//        tv.setText(stdid + '\n' + stdpw);
-//        setContentView(tv);
-
 
         LinearLayout linearLayout[] = new LinearLayout[7];
-        TextView gameTurn = new TextView(this);
+        linearLayout[0] = (LinearLayout) findViewById(R.id.ll1);
+        linearLayout[1] = (LinearLayout) findViewById(R.id.ll2);
+        linearLayout[2] = (LinearLayout) findViewById(R.id.ll3);
+        linearLayout[3] = (LinearLayout) findViewById(R.id.ll4);
+        linearLayout[4] = (LinearLayout) findViewById(R.id.ll5);
+        linearLayout[5] = (LinearLayout) findViewById(R.id.ll6);
+        linearLayout[6] = (LinearLayout) findViewById(R.id.ll7);
+        Button restart,retreat;
+
+        retreat = (Button) findViewById(R.id.retreat);
+        restart = (Button) findViewById(R.id.restart);
         gameTurn = (TextView) findViewById(R.id.gameTurn);
+        gscore = (TextView) findViewById(R.id.gscore);
+        rscore = (TextView) findViewById(R.id.rscore);
+
+        gscore.setText(Integer.toString(score[1]));
+        gscore.setTextColor(Color.GREEN);
+
+        rscore.setText(Integer.toString(score[0]));
+        rscore.setTextColor(Color.parseColor("#00FFFF"));
+
+
+//////////////////// testing
+        blueTurn = (ImageView) findViewById(R.id.resistance);
+        greenTurn = (ImageView) findViewById(R.id.enlightened);
+        final ImageView localblueTurn = blueTurn;
+        final ImageView localgreenTurn = greenTurn;
+////////////////////
         if (isRedTurn) {
             gameTurn.setText("Resistance Turn");
             gameTurn.setTextColor(Color.parseColor("#00FFFF"));
-
+            blueTurn.setImageResource(R.drawable.resistance_alt);
+            greenTurn.setImageResource(R.drawable.enlightened);
         } else {
             gameTurn.setText("Enlightened Turn");
             gameTurn.setTextColor(Color.GREEN);
+            blueTurn.setImageResource(R.drawable.resistance);
+            greenTurn.setImageResource(R.drawable.enlightened_alt);
 
         }
         final TextView localgameTurn = gameTurn;
-        Button retreat;
-        retreat = (Button) findViewById(R.id.retreat);
         retreat.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 if(!gameSet){
                     if(sequence.isEmpty()){
-                        Toast.makeText(game.this, "Please put at least one chess", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(game.this, "At Least One Attack", Toast.LENGTH_SHORT).show();
                     }else {
                         isRedTurn = !isRedTurn;
                         int retreatj = sequence.pop();
@@ -70,20 +88,21 @@ public class game extends AppCompatActivity {
                         if (isRedTurn) {
                             localgameTurn.setText("Resistance Turn");
                             localgameTurn.setTextColor(Color.parseColor("#00FFFF"));
+                            localblueTurn.setImageResource(R.drawable.resistance_alt);
+                            localgreenTurn.setImageResource(R.drawable.enlightened);
                         } else {
                             localgameTurn.setText("Enlightened Turn");
                             localgameTurn.setTextColor(Color.GREEN);
+                            localgreenTurn.setImageResource(R.drawable.enlightened_alt);
+                            localblueTurn.setImageResource(R.drawable.resistance);
                         }
                     }
                 }else{
                     Toast.makeText(game.this, "Lose is Lose. One More Campaign", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
 
-        Button restart;
-        restart = (Button) findViewById(R.id.restart);
         restart.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -102,18 +121,6 @@ public class game extends AppCompatActivity {
                 sequence.clear();
             }
         });
-
-
-
-
-        linearLayout[0] = (LinearLayout) findViewById(R.id.ll1);
-        linearLayout[1] = (LinearLayout) findViewById(R.id.ll2);
-        linearLayout[2] = (LinearLayout) findViewById(R.id.ll3);
-        linearLayout[3] = (LinearLayout) findViewById(R.id.ll4);
-        linearLayout[4] = (LinearLayout) findViewById(R.id.ll5);
-        linearLayout[5] = (LinearLayout) findViewById(R.id.ll6);
-        linearLayout[6] = (LinearLayout) findViewById(R.id.ll7);
-
 
         //初始化chess数组
         for (int i = 0; i < 7; i++) {
@@ -137,9 +144,13 @@ public class game extends AppCompatActivity {
                         if (!isRedTurn) {
                             localgameTurn.setText("Resistance Turn");
                             localgameTurn.setTextColor(Color.parseColor("#00FFFF"));
+                            localblueTurn.setImageResource(R.drawable.resistance_alt);
+                            localgreenTurn.setImageResource(R.drawable.enlightened);
                         } else {
                             localgameTurn.setText("Enlightened Turn");
                             localgameTurn.setTextColor(Color.GREEN);
+                            localblueTurn.setImageResource(R.drawable.resistance);
+                            localgreenTurn.setImageResource(R.drawable.enlightened_alt);
 
                         }
                         if (chess[locali][localj] == 0) {
@@ -303,7 +314,6 @@ public class game extends AppCompatActivity {
         }
 
         if (urcount + dlcount >= 4) {
-
             //全部放到一个数组里
             for (int hix = i - dlcount, hij = j + dlcount; hix < i + urcount; hix++, hij--) {
                 if (color == 1) {
@@ -335,11 +345,32 @@ public class game extends AppCompatActivity {
 
             if (color == 1) {
                 Toast.makeText(game.this, "The Resistance Win", Toast.LENGTH_SHORT).show();
-//            gameTurn.setText("Red Win");
+                blueTurn.setImageResource(R.drawable.resistance);
+                greenTurn.setImageResource(R.drawable.enlightened);
+                gameTurn.setText("Link Established. The Resistance Win");
+                gameTurn.setTextColor(Color.parseColor("#00FFFF"));
+                score[0] += 1;
+
+                gscore.setText(Integer.toString(score[1]));
+                gscore.setTextColor(Color.GREEN);
+
+                rscore.setText(Integer.toString(score[0]));
+                rscore.setTextColor(Color.parseColor("#00FFFF"));
             } else {
                 Toast.makeText(game.this, "The Enlightened Win", Toast.LENGTH_SHORT).show();
-//            gameTurn.setText("Green Win");
+                blueTurn.setImageResource(R.drawable.resistance);
+                greenTurn.setImageResource(R.drawable.enlightened);
+                gameTurn.setText("Link Established. The Enlighteded Win");
+                gameTurn.setTextColor(Color.parseColor("#00FF00"));
+                score[1] += 1;
+
+                gscore.setText(Integer.toString(score[1]));
+                gscore.setTextColor(Color.GREEN);
+
+                rscore.setText(Integer.toString(score[0]));
+                rscore.setTextColor(Color.parseColor("#00FFFF"));
             }
         }
     }
+
 }
