@@ -135,7 +135,7 @@ public class game extends AppCompatActivity {
                 final int localj = j;
                 final ImageView localimageButton[][] = imageButton;
                 imageButton[i][j] = new ImageView(this);
-                imageButton[i][j].setLayoutParams(new ViewGroup.LayoutParams(150, 150));
+                imageButton[i][j].setLayoutParams(new ViewGroup.LayoutParams(60, 60));
                 imageButton[i][j].setImageResource(R.drawable.empty_t);
                 //给每一个button添加监听事件
                 imageButton[i][j].setOnClickListener(new View.OnClickListener() {

@@ -3,85 +3,84 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".index">
-<ImageView
-    android:layout_width="250dp"
-    android:layout_height="250dp"
-    android:layout_marginTop="30dp"
-    android:src="@drawable/ingress_logo_bw"
-    android:layout_centerHorizontal="true"/>
+
+    <ImageView
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/ingress_logo_bw" />
+
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="AGENT  ID   "
         android:id="@+id/l_stdid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
         android:layout_marginTop="300dp"
-        android:layout_alignParentTop="true" />
+        android:text="AGENT  ID   " />
+
     <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="Input Your Agent ID"
-        android:ems="15"
         android:id="@+id/t_stdid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/l_stdid"
+        android:layout_marginLeft="20dp"
         android:layout_toRightOf="@+id/l_stdid"
-        android:layout_marginLeft="20dp"
-        android:layout_alignBaseline="@+id/l_stdid"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="PASSWORD"
-        android:id="@+id/l_stdpw"
-        android:layout_below="@+id/l_stdid"
-        android:layout_marginTop="40dp"/>
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"
         android:ems="15"
+        android:inputType="textPersonName"
+        android:text="Input Your Agent ID" />
+
+    <TextView
+        android:id="@+id/l_stdpw"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/l_stdid"
+        android:layout_marginTop="20dp"
+        android:text="PASSWORD" />
+
+    <EditText
         android:id="@+id/t_stdpw"
-        android:layout_toRightOf="@+id/l_stdpw"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/l_stdpw"
         android:layout_marginLeft="20dp"
-        android:layout_alignBaseline="@+id/l_stdpw"/>
+        android:layout_toRightOf="@+id/l_stdpw"
+        android:ems="15"
+        android:inputType="textPassword" />
 
     <Button
+        android:id="@+id/btn_start"
         style="?android:attr/buttonStyleSmall"
+        android:layout_width="200dp"
         android:layout_height="50dp"
         android:text="Start The Campaign"
-        android:layout_width="200dp"
-        android:id="@+id/btn_start"
-        android:layout_marginTop="40dp"
-        android:layout_below="@+id/t_stdpw"
-        android:layout_centerHorizontal="true" />
+        android:layout_above="@+id/btn_quit"
+        android:layout_alignStart="@+id/btn_quit" />
 
     <Button
+        android:id="@+id/btn_quit"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:text="I Give Up"
-        android:id="@+id/btn_quit"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/btn_start"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 
     <Button
+        android:id="@+id/btn_about"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="About Ingress"
-        android:id="@+id/btn_about"
-        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_toEndOf="@+id/btn_start"
-        android:textSize="8sp" />
-
+        android:text="About Ingress"
+        android:textSize="8sp"
+        android:layout_alignParentEnd="true" />
 
 
 </RelativeLayout>
