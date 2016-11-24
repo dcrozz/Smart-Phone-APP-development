@@ -3,6 +3,7 @@ package com.example.alex.assign_1;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -14,7 +15,6 @@ import android.widget.Toast;
 import java.util.ArrayDeque;
 
 public class game extends AppCompatActivity {
-    private String stdid, stdpw;
     private boolean isRedTurn;
     private int[][] chess = new int[7][6];
     private ArrayDeque<Integer> sequence = new ArrayDeque<>();
@@ -23,12 +23,21 @@ public class game extends AppCompatActivity {
     private ImageView blueTurn, greenTurn;
     private TextView gameTurn,gscore,rscore;
     private int[] score = {0,0};
+    private DisplayMetrics dm =new DisplayMetrics();
 
     //none = 0, red = 1, green =2，fin = 3, hired = 4, higreen = 5
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
+
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        int ScreenHeight = dm.heightPixels;
+        int ScreenWidth = dm.widthPixels;
+        System.out.println(ScreenHeight);
+        System.out.println(ScreenWidth);
+        int coloumWidth = ScreenWidth/7;
 
         LinearLayout linearLayout[] = new LinearLayout[7];
         linearLayout[0] = (LinearLayout) findViewById(R.id.ll1);
@@ -38,6 +47,12 @@ public class game extends AppCompatActivity {
         linearLayout[4] = (LinearLayout) findViewById(R.id.ll5);
         linearLayout[5] = (LinearLayout) findViewById(R.id.ll6);
         linearLayout[6] = (LinearLayout) findViewById(R.id.ll7);
+
+        for(int i=0;i<7;i++){
+            ViewGroup.LayoutParams params = linearLayout[i].getLayoutParams();
+            params.width = coloumWidth;
+            linearLayout[i].setLayoutParams(params);
+        }
         Button restart,retreat;
 
         retreat = (Button) findViewById(R.id.retreat);
@@ -135,7 +150,7 @@ public class game extends AppCompatActivity {
                 final int localj = j;
                 final ImageView localimageButton[][] = imageButton;
                 imageButton[i][j] = new ImageView(this);
-                imageButton[i][j].setLayoutParams(new ViewGroup.LayoutParams(60, 60));
+                imageButton[i][j].setLayoutParams(new ViewGroup.LayoutParams(coloumWidth, coloumWidth));
                 imageButton[i][j].setImageResource(R.drawable.empty_t);
                 //给每一个button添加监听事件
                 imageButton[i][j].setOnClickListener(new View.OnClickListener() {
@@ -191,7 +206,9 @@ public class game extends AppCompatActivity {
         lcrossWin(i, j, color);
         rcrossWin(i, j, color);
         winEffect(i, j, color);
+        drawGame();
     }
+
 
     protected void horWin(int i, int j, int color) {
         //确保落下子的值还是原来的color
@@ -372,6 +389,22 @@ public class game extends AppCompatActivity {
                 rscore.setText(Integer.toString(score[0]));
                 rscore.setTextColor(Color.parseColor("#00FFFF"));
             }
+        }
+    }
+    protected void drawGame(){
+        if (sequence.size() == 84){
+            gameSet = true;
+            Toast.makeText(game.this, "Draw Game", Toast.LENGTH_SHORT).show();
+            blueTurn.setImageResource(R.drawable.resistance);
+            greenTurn.setImageResource(R.drawable.enlightened);
+            gameTurn.setText("Nobody Wins");
+            gameTurn.setTextColor(Color.parseColor("#FFFFFF"));
+
+            gscore.setText(Integer.toString(score[1]));
+            gscore.setTextColor(Color.GREEN);
+
+            rscore.setText(Integer.toString(score[0]));
+            rscore.setTextColor(Color.parseColor("#00FFFF"));
         }
     }
 

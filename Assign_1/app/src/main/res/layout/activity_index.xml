@@ -25,7 +25,7 @@
         android:layout_marginTop="300dp"
         android:text="AGENT  ID   " />
 
-    <EditText
+    <TextView
         android:id="@+id/t_stdid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -33,8 +33,7 @@
         android:layout_marginLeft="20dp"
         android:layout_toRightOf="@+id/l_stdid"
         android:ems="15"
-        android:inputType="textPersonName"
-        android:text="Input Your Agent ID" />
+        android:text="Cao Siyuan" />
 
     <TextView
         android:id="@+id/l_stdpw"
@@ -44,7 +43,7 @@
         android:layout_marginTop="20dp"
         android:text="PASSWORD" />
 
-    <EditText
+    <TextView
         android:id="@+id/t_stdpw"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -52,7 +51,7 @@
         android:layout_marginLeft="20dp"
         android:layout_toRightOf="@+id/l_stdpw"
         android:ems="15"
-        android:inputType="textPassword" />
+        android:text="3035348425"/>
 
     <Button
         android:id="@+id/btn_start"
